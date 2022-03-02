@@ -1,0 +1,9 @@
+*.pid
+*.swo
+*.swp
+*.tmp
+*tags.vi
+.DS_Store
+.tags
+
+kko
