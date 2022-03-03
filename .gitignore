@@ -7,3 +7,7 @@
 .tags
 
 kko
+
+node_modules
+cache
+artifacts
