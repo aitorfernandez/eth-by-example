@@ -9,6 +9,9 @@ yarn add -D hardhat
 // setup project
 npx hardhat
 
+// dependencies
+yarn add -D @nomiclabs/hardhat-web3 @nomiclabs/hardhat-truffle5 @nomiclabs/hardhat-ethers ethers
+
 // compile
 npx hardhat compile
 
