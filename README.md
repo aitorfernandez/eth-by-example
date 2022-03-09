@@ -48,6 +48,6 @@ yarn @nomiclabs/hardhat-truffle5 @nomiclabs/hardhat-web3 web3
 
 ## verify
 
-```
+```sh
 npx hardhat verify --network rinkeby IMPLEMENTATION_ADDRESS
 ```
