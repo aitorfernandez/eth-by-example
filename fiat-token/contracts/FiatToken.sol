@@ -1,13 +1,15 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 
-contract FiatToken is ERC20 {
+contract FiatToken is ERC20, Ownable {
   uint256 internal _totalSupply = 0;
   address public masterMinter;
 
   mapping(address => bool) internal _minters;
+  mapping(address => uint256) internal _minterAllowed;
 
   modifier onlyMasterMinter() {
     require(msg.sender == masterMinter, "[FiatToken] caller is not the masterMinter");
@@ -40,5 +42,19 @@ contract FiatToken is ERC20 {
     external onlyMasterMinter
   {
     _minters[_minter] = true;
+  }
+
+  function setMasterMinter(address _address)
+    external onlyOwner
+  {
+    masterMinter = _address;
+  }
+
+  function configureMinter(address _minter, uint256 _allowance)
+    external onlyMasterMinter returns (bool)
+  {
+    _minters[_minter] = true;
+    _minterAllowed[_minter] = _allowance;
+    return true;
   }
 }

@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 
 contract Administered is AccessControl {
   bytes32 public constant GUEST_ROLE = keccak256("GUEST");
+  bytes32 public constant BLACK_LIST_ROLE = keccak256("BLACK_LIST_ROLE");
 
   modifier onlyAdmin() {
     require(isAdmin(msg.sender), "Restricted to admins.");
