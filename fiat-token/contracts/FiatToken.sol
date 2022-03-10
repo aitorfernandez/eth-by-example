@@ -25,7 +25,7 @@ contract FiatToken is ERC20, Ownable {
     masterMinter = _masterMinter;
   }
 
-  function mint(uint256 _amount)
+  function mint(address _to, uint256 _amount)
     external onlyMinters
   {
     require(_amount > 0, "[FiatToken] mint amount not greater than 0");

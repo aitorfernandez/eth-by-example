@@ -1,16 +1,15 @@
 const { expect } = require('chai')
+const { expectRevert } = require('@openzeppelin/test-helpers')
 
 const FiatToken = artifacts.require('FiatToken')
 const MasterMinter = artifacts.require('MasterMinter')
 
-const accounts = require('./utils.js').accounts
-
-contract('MasterMinter', ([tokenOwner, mintOwner, controller, minter]) => {
+contract('MasterMinter', ([owner, mintOwner, controller, minter, alice, bob, ...rest]) => {
   let token, masterMinter
 
   beforeEach(async () => {
-    token = await FiatToken.new(accounts.null, {
-      from: tokenOwner,
+    token = await FiatToken.new(alice, {
+      from: owner,
     })
     masterMinter = await MasterMinter.new(token.address, {
       from: mintOwner,
@@ -26,16 +25,15 @@ contract('MasterMinter', ([tokenOwner, mintOwner, controller, minter]) => {
       from: mintOwner,
     })
 
-    // await masterMinter.configureMinter(amount, {
-    //   // Controller manages minter
-    //   from: accounts.controller,
-    // })
+    await masterMinter.configureMinter(amount, {
+      // Controller manages minter
+      from: controller,
+    })
 
-    // const arbitrary = signers[19].address
-    // await token.mint(arbitrary, amount, {
-    //   from: accounts.minter,
-    // })
+    await token.mint(alice, amount, {
+      from: minter,
+    })
 
-    expect(true).to.equal(true)
+    expect((await token.getSupply()).toNumber()).to.equal(amount)
   })
 })

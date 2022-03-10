@@ -1,15 +1,14 @@
 const { expect } = require('chai')
+const { expectRevert } = require('@openzeppelin/test-helpers')
 
 const FiatToken = artifacts.require('FiatToken')
 
-const accounts = require('./utils.js').accounts
-
-describe('FiatToken', () => {
+contract('FiatToken', ([owner, alice, bob, carol, dan, ...rest]) => {
   let token
 
   beforeEach(async () => {
-    token = await FiatToken.new(accounts.null, {
-      from: accounts.tokenOwner,
+    token = await FiatToken.new(alice, {
+      from: owner,
     })
   })
 
@@ -20,9 +19,15 @@ describe('FiatToken', () => {
   it('setMasterMinter', async () => {
     const signers = await ethers.getSigners()
 
-    const newMasterMinter = signers[12].address
-    await token.setMasterMinter(newMasterMinter)
+    await token.setMasterMinter(bob)
 
-    expect(await token.masterMinter()).to.equal(newMasterMinter)
+    expect(await token.masterMinter()).to.equal(bob)
+  })
+
+  it('non owner cannot set masterMinter', async () => {
+    await expectRevert(
+      token.setMasterMinter(carol, { from: dan }),
+      'Ownable: caller is not the owner',
+    )
   })
 })
