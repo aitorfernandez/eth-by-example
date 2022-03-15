@@ -1,5 +1,6 @@
 pragma solidity >=0.5.0 <0.6.0;
 
+
 /**
 * @title Ownable
 * @dev The Ownable contract has an owner address, and provides basic authorization control
@@ -33,7 +34,7 @@ contract Ownable {
   * @dev Throws if called by any account other than the owner.
   */
   modifier onlyOwner() {
-    require(isOwner());
+    require(isOwner(), "onlyOwner");
     _;
   }
 
