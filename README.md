@@ -51,3 +51,16 @@ yarn @nomiclabs/hardhat-truffle5 @nomiclabs/hardhat-web3 web3
 ```sh
 npx hardhat verify --network rinkeby IMPLEMENTATION_ADDRESS
 ```
+
+## Console
+
+```sh
+npx hardhat console --network localhost
+```
+
+## Network
+
+```sh
+npx hardhat run --network localhost scripts/deploy.js
+npx hardhat run --network rinkeby scripts/deploy.js
+```
